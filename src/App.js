@@ -1,13 +1,23 @@
 import React from 'react';
-import './App.css';
-imp
+import Header from './components/Header/header'
+import Home from './components/Home/home';
+import Carrinho from './components/Carrinho/carrinho';
 
-function App() {
+import './App.css';
+
+class App extends React.Component {
+  render() {
   return (
-    <header>
-      <p>Oi</p>
-    </header>
-  );
+  <div className='App'>
+    <Header/>
+    <Home/>
+    <Carrinho/>
+
+  </div>
+
+  )
+ }
+
 }
 
 export default App;
