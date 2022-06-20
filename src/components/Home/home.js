@@ -1,75 +1,166 @@
-import React from 'react';
-import './Home.css'
-import  camiseta1 from '../imgs/camiseta1.jpeg';
-import  camisa from '../imgs/camisa.jpeg';
-import  blusa4 from '../imgs/blusa4.jpeg';
-import  blusa5 from '../imgs/blusa5.jpeg';
+import React from "react";
+import styled from "styled-components";
 
 
+const Img = styled.img`
+  height: 12vh;
+  @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    height: 8vh;
+  }
+`;
 
-  
-export default class Home extends React.Component{
+const ImgCart = styled.img`
+  height: 5vh;
+`;
 
-    render (){  
-   return (
-        <>
-        <h1> Loja </h1>
-        <div>
-          <p> Ordenação </p>
-            <select>
-              <option value = 'Crescente'>Crescente</option>
-              <option value = 'Decrescente'> Decrescente</option>
-            </select>
-      </div>
-  
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 12vh;
+  background-color: #7378A5;
+  padding: 0px 20px 0px 20px;
+  @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    font-size: 10px;
+  }
+`;
+
+const ButtonEContador = styled.div`
+  display: flex;
+`;
+
+const ButtonCart = styled.button`
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #7378A5;
+  border: none;
+`;
+const Contador = styled.p`
+  display: block;
+  position: absolute;
+  top: -4px;
+  right: 1px;
+  width: 20px;
+  height: 20px;
+  background: #e30001;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 15px;
+  margin-right: 10px;
+`;
+
+const InputBusca = styled.input`
+  display: flex;
+  margin: 10px;
+  width: 30vw;
+  height: 2.8vh;
+  background-color: #eae7e7;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  border-bottom: 1px solid black;
+  @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    margin-left: 0%;
+  }
+  ::placeholder {
+    margin-right: 5px;
+    padding: 5px  ;
     
-        <p> Quantidade de produto: 4 </p>
-            <br/>
+  }
+`;
 
-        <div className='conteudo'>
+const InputsPrice = styled.div`
+  display: flex;
+  justify-content: space-around;
+  background-color: #eae7e7;
+  @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+const InputMinMax = styled.input`
+  margin: 10px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  border-bottom: 1px solid black;
+  background-color: #eae7e7;
+  @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    justify-content: center;
+    margin: 0;
+  }
+`;
 
+const Order = styled.select`
+  margin: 10px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  border-bottom: 1px solid black;
+  background-color: #eae7e7;
+`;
 
-          <div className='card'> 
-              <img className='imagem'src={camiseta1} alt=""/> 
-              <p> Camiseta Masculina com estampa de Galáxia</p>
-              <p> valor R$ 60,00</p>
-              <button className='botao'> adicionar ao carrinho </button>
-          </div>
-  
-            <div className='card'>
-            <img className='imagem' src={camisa} alt=""/> 
-            <p> Camisa feminina</p>
-            <p> valor R$ 30,00</p>
-            <button  className='botao' onClick={this.card}> adicionar ao carrinho </button>
-            </div>
-  
-            <div className='card'>
-            <img className='imagem' src={blusa4} alt=""/> 
-            <p> Blusa de Frio Masculina </p>
-            <p> valor R$ 200,00</p>
-            <button className='botao' button onClick={this.card}> adicionar ao carrinho </button>
-            </div>
-  
-            <div className='card'> 
-            <img className='imagem' src={blusa5} alt=""/>
-            <p> Blusa de Frio fases da lua</p>
-            <p> valor R$ 120,00</p>
-            <button className='botao' button onClick={this.card}> adicionar ao carrinho </button>
-            </div>
-  
-         </div>
-
+class Home extends React.Component {
+  render() {
+    let valorContador = this.props.quantidadeProdutos;
+    return (
+      <div>
+        <Header>
+          <Img src="/img/logotipo.png"/>
+          <h1>Shirts Store</h1>
+         
+          <a href="#">Contato</a>
            
-     </>
-   )
-   }
+          <ButtonEContador>
+            <Contador>{valorContador}</Contador>
+            <ButtonCart onClick={this.props.renderizaCarrinho}>
+              <ImgCart src="/img/carrinho.png"/>
+            </ButtonCart>
+          </ButtonEContador>
+        </Header>
+        <InputsPrice>
+          <div>
+            <InputBusca           
+             placeholder="Buscar"
+             value={this.props.query}
+             onChange={this.props.updateQuery}
+            />
+            <InputMinMax
+              type="number"
+              placeholder="Preço Minimo"
+              value={this.props.minPrice}
+              onChange={this.props.updateMinPrice}
+            />
+            <InputMinMax
+              type="number"
+              placeholder="Preço Máximo"
+              value={this.props.MaxPrice}
+              onChange={this.props.updateMaxPrice}
+            />
+          </div>
+          <div>
+            <label for="sort">Ordenação:</label>
+            <Order
+              name="order"
+              value={this.props.order}
+              onChange={this.props.updateOrder}
+            >
+              <option value={1}>Menor Preço</option>
+              <option value={-1}>Maior Preço</option>
+            </Order>
+          </div>
+        </InputsPrice>
+      </div>
+    );
+  }
 }
+export default Home;
+
 
  
     
-
-
-
- 
-          
-          
